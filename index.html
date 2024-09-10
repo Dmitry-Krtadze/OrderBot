@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замовлення 3D-друку</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Замовлення на 3D-друк</h1>
+    <form id="orderForm">
+        <input type="text" id="name" placeholder="Ваше ім'я" required>
+        <input type="text" id="contact" placeholder="Ваш контактний номер або email" required>
+        <textarea id="description" placeholder="Опис моделі для друку" required></textarea>
+        <button type="button" onclick="sendOrder()">Надіслати замовлення</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
