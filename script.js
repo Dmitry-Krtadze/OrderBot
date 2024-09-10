@@ -28,13 +28,13 @@ function sendOrder() {
 Колір: ${color}
 Дані: ${fileData}`;
 
-    fetch(`https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage`, {
+    fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            chat_id: '<CHAT_ID>',
+            chat_id: '1061513902',
             text: message
         })
     })
