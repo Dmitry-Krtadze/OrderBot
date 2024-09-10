@@ -8,11 +8,13 @@ body {
 }
 h1 {
     color: #004080;
+    text-align: center;
 }
 form {
-    margin-top: 20px;
-    max-widht: 360px;
-    margin-bottom: 10%:
+
+    max-width: 360px;
+
+    margin: 0 auto;
 }
 input, textarea, button, select {
     display: block;
