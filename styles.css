@@ -3,6 +3,8 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #e0f7ff;
+    max-width: 320px;
+    margin: 0 auto;
 }
 h1 {
     color: #004080;
@@ -25,4 +27,7 @@ button {
 }
 button:hover {
     background-color: #005bb5;
+}
+#fileOption{
+    display: flex;
 }
