@@ -1,4 +1,3 @@
-
 document.getElementById('fileOption').addEventListener('change', function(e) {
     if (document.getElementById('upload').checked) {
         document.getElementById('fileUpload').style.display = 'block';
@@ -13,13 +12,22 @@ function sendOrder() {
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('telegram').value;
     const color = document.getElementById('color').value;
-    let fileOption = document.querySelector('input[name="fileOption"]:checked').value;
+    const fileOption = document.querySelector('input[name="fileOption"]:checked').value;
     let fileData;
 
+    // Проверка на наличие файла или ссылки на Thingiverse
     if (fileOption === 'upload') {
         fileData = document.getElementById('fileUpload').files[0];
+        if (!fileData) {
+            alert('Будь ласка, завантажте файл.');
+            return;
+        }
     } else {
         fileData = document.getElementById('fileUrl').value;
+        if (!fileData.startsWith('https://www.thingiverse.com/')) {
+            alert('Будь ласка, надайте дійсне посилання на Thingiverse.');
+            return;
+        }
     }
 
     const message = `Нове замовлення на 3D-друк:
