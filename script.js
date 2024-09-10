@@ -1,10 +1,32 @@
 
+document.getElementById('fileOption').addEventListener('change', function(e) {
+    if (document.getElementById('upload').checked) {
+        document.getElementById('fileUpload').style.display = 'block';
+        document.getElementById('fileUrl').style.display = 'none';
+    } else {
+        document.getElementById('fileUpload').style.display = 'none';
+        document.getElementById('fileUrl').style.display = 'block';
+    }
+});
+
 function sendOrder() {
     const name = document.getElementById('name').value;
-    const contact = document.getElementById('contact').value;
-    const description = document.getElementById('description').value;
+    const telegram = document.getElementById('telegram').value;
+    const color = document.getElementById('color').value;
+    let fileOption = document.querySelector('input[name="fileOption"]:checked').value;
+    let fileData;
 
-    const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${contact}\nОпис моделі: ${description}`;
+    if (fileOption === 'upload') {
+        fileData = document.getElementById('fileUpload').files[0];
+    } else {
+        fileData = document.getElementById('fileUrl').value;
+    }
+
+    const message = `Нове замовлення на 3D-друк:
+Ім'я: ${name}
+Контакт: ${telegram}
+Колір: ${color}
+Дані: ${fileData}`;
 
     fetch(`https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage`, {
         method: 'POST',
