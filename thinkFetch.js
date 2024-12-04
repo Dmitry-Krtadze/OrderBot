@@ -1,6 +1,6 @@
 const accessToken = "4aec01d2cbf747275da7922d16ae5741";
 
-async function fetchPopularThings(limit = 100) {
+async function fetchPopularThings(limit = 500) {
     let page = 1; // Начальная страница
     const perPage = 50; // Количество моделей на страницу
     const allThings = []; // Массив для хранения всех моделей
