@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замовлення 3D-друку</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+          <div class="header__body">
+            
+          <div class="header__burger">
+            <span></span>
+          </div>
+          <nav class="header__menu">
+            <ul class="header__list">
+              <li>
+                <a href="#" class="header__link">Моделі готові до друку</a>
+              </li>
+              <li>
+                <a href="#" class="header__link">Замовити власну модель</a>
+              </li>
+              <li>
+                <a href="#" class="header__link">Інструкція</a>
+              </li>
+              <li>
+                <a href="#" class="header__link">Контакти</a>
+              </li>
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Замовлення 3D-друку</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+          <div class="header__body">
+            
+          <div class="header__burger">
+            <span></span>
+          </div>
+          <nav class="header__menu">
+            <ul class="header__list">
+              <li>
+                <a href="index.html" class="header__link">Моделі готові до друку</a>
+              </li>
+              <li>
+                <a href="orderModel.html" class="header__link">Замовити власну модель</a>
+              </li>
+              <li>
+                <a href="Instruction.html" class="header__link">Інструкція</a>
+              </li>
+              <li>
+                <a href="contact.html" class="header__link">Контакти</a>
+              </li>
+              
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+
+    
+    <h1>Замовлення на 3D-друк</h1>
+    <form id="orderForm">
+        <input type="text" id="name" placeholder="Ваше ім'я" required>
+        <input type="text" id="telegram" placeholder="Ваш контакт в Telegram" required>
+        
+        <label id="fileOption" for="fileOption">Оберіть спосіб завантаження файлу:</label>
+        <div id="fileOption">
+            <input type="radio" id="upload" name="fileOption" value="upload" checked> Завантажити файл<br>
+            <input  type="radio" id="url" name="fileOption" value="url"> Вставити посилання на сайт
+        </div>
+        
+        <input type="file" id="fileUpload" style="display: block; margin-top: 10px;">
+        <input type="url" id="fileUrl" placeholder="Посилання на сайт" style="display: none; margin-top: 10px;">
+
+        <label for="color">Оберіть колір пластику:</label>
+        <select id="color" required>
+            <option value="Green">Зелений</option>
+           
+        </select>
+
+        <button type="button" onclick="sendOrder()">Надіслати замовлення</button>
+    </form>
+    
+
+    <script src="script.js"></script>
+</body>
+
+   
+
+
+    
+</html>
