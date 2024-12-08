@@ -338,3 +338,148 @@ label{
     color: rgb(81, 81, 71);
     outline: none;
 }
+
+
+#instruction{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#instruction h2{
+  margin-bottom: 30px;
+}
+
+.inst1{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  margin-top: 40px;
+  margin-left: 50px;
+}
+
+.bloke{
+  display: flex;
+  justify-content: center;
+}
+
+#instruction a{
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+}
+
+.tg{
+  margin-top: 40px;
+}
+
+
+.developer{
+  display: flex;
+  flex-direction: row;
+  width: 800px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+}
+
+.developer img{
+  border-radius: 50%;
+  width: 350px;
+  height: 350px;
+  margin-left: 10px;
+}
+
+.info{
+  display: flex;
+  flex-direction: column;
+}
+
+.info h1{
+  color: black;
+  margin-bottom: 10px;
+}
+
+.bottom{
+  margin-bottom: 40px;
+  margin-left: 60px;
+}
+
+.dm{
+  width: 340px;
+  margin-left: 65px;
+}
+
+.dm p{
+  font-size: 17px;
+}
+
+.developer a{
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+}
+
+.contBl{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.instruction2{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 70px;
+}
+
+.instruction2 h2{
+  margin-bottom: 30px;
+}
+
+.instruction2 a{
+  color: black;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+}
+
+.uvaga{
+  margin-top: 10px;
+  color: rgb(184, 15, 15);
+}
+
+@media (max-width:768px){
+    
+.inst1{
+  margin-left: 40px;
+  width: 70%;
+}
+
+.bloke{
+  flex-direction: column;
+  align-items: center;
+}
+
+#instruction h3{
+  font-size: 15px;
+}
+
+.bloke{
+  margin-right: 60px;
+}
+
+.uvaga{
+  margin-left: 10px;
+}
+
+
+.developer{
+  flex-direction: column;
+  margin-left: 30px;
+}
+.developer img{
+  width: 300px;
+  height: 300px;
+}
+}
