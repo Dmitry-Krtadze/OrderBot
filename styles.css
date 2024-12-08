@@ -374,6 +374,27 @@ label{
 }
 
 
+.contact{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.kartinka img{
+  margin: 30px;
+  border-radius: 100%;
+  height: 500px;
+  width: auto;
+}
+.continfo{
+  color: black;
+  margin: 150px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.continfo h1{
+  color: black;
+}
 .developer{
   display: flex;
   flex-direction: row;
@@ -472,14 +493,17 @@ label{
 .uvaga{
   margin-left: 10px;
 }
-
-
-.developer{
+.contact{
   flex-direction: column;
-  margin-left: 30px;
 }
-.developer img{
-  width: 300px;
-  height: 300px;
+.kartinka{
+  display: flex;
+  justify-content: center;
 }
+}
+
+@media (max-width:426px){
+  .kartinka img{
+    height: 320px;
+  }
 }
