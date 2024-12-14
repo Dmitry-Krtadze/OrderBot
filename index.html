@@ -36,7 +36,28 @@
       </div>
     </header>
 
-    <h1 style="color: red;">Моделі можливі до друку тільки одним кольром !</h1>
+    
+
+    <div class="popup" id="popup">
+      <div class="popup-content">
+        <h1 style="color: red; font-size: 20px;">Моделі можливі до друку тільки одним кольром !</h1>
+        <br>
+        <br>
+        <h2>Ціни на друк:</h2>
+        <ul>
+          <li>
+            Маленька - 50 грн
+          </li>
+          <li>
+            Середня - 100 грн
+          </li>
+          <li>
+            Велика - 170 грн
+          </li>
+        </ul>
+        <button id="closePopup">Закрити</button>
+      </div>
+    </div>
     <div class="container" id="cards-container">
         <!-- Карточки будут динамически добавлены -->
     </div>
@@ -64,6 +85,19 @@
     
     <script src="thinkFetch.js"></script>
     <script src="script.js"></script>
+    <script>
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const popup = document.getElementById("popup");
+      const closePopup = document.getElementById("closePopup");
+
+      closePopup.addEventListener("click", () => {
+        popup.style.display = "none";
+      });
+    });
+
+    </script>
 </body>
 
     
