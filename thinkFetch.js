@@ -94,6 +94,7 @@ modal.addEventListener('click', (e) => {
 submitOrder.addEventListener('click', () => {
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('phone').value;
+    const Comment = document.getElementById('Comment').value;
     const color = document.getElementById('color').value;
 
     if (!name || !phone) {
@@ -110,7 +111,7 @@ submitOrder.addEventListener('click', () => {
 
 
     // Сообщение для бота
-    const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${telegram}\nКолір: ${color}`;
+    const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${telegram}\nКолір: ${color}\Коментар: ${Comment}`;
     fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage`, {
             method: 'POST',
             headers: {
