@@ -1,53 +1,79 @@
+let modelsArray = [
+    2194278,
+    1012788,
+    2417931,
+    5631565,
+    4801924,
+    5433217,
+    4703140,
+    1322545,
+    2402094,
+    2652081,
+    2921407,
+    2871637,
+    6528431,
+    4652388,
+    5083091,
+    711518,
+    3396483,
+    723297,
+    6279676,
+    4966820,
+    5626039,
+    727983,
+    1668055,
+    1629018,
+    722856,
+    4486452,
+    2738612,
+    5152805,
+    3857486,
+    11825,
+    524925,
+    5828603,
+    3988117,
+    295210,
+    3005917,
+    1329694,
+    1129757,
+    4976025,
+    6688083,
+    5977565,
+    4138701,
+    3411791,
+    3445079,
+    4611778,
+    3840454,
+    3486402
+];
+
 const accessToken = "4aec01d2cbf747275da7922d16ae5741";
 
-async function fetchPopularThings(limit = 500) {
-    let page = 1; // Начальная страница
-    const perPage = 50; // Количество моделей на страницу
-    const allThings = []; // Массив для хранения всех моделей
+async function WriteModel() {
+    const allThings = []; 
 
-    try {
-        while (allThings.length < limit) {
-            const url = `https://api.thingiverse.com/popular?page=${page}&per_page=${perPage}`;
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${accessToken}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`Ошибка: ${response.status}`);
+    for (el of modelsArray){
+        await fetch(`https://api.thingiverse.com/things/${el}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
             }
-
-            const data = await response.json();
-
-            if (data.length === 0) {
-                // Если новых данных нет, прекращаем запросы
-                break;
-            }
-
-            allThings.push(...data); // Добавляем данные к общему списку
-            console.log(`Загружено моделей: ${allThings.length}`);
-            page++; // Переходим к следующей странице
-
-            if (allThings.length >= limit) {
-                break;
-            }
-        }
-
-        console.log("Загруженные популярные модели:", allThings);
-        generateCards(allThings);
-        return allThings.slice(0, limit); // Ограничиваем количество моделей
-
-        
-    } catch (error) {
-        console.error("Ошибка при запросе популярных моделей:", error);
-        return [];
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                allThings.push(data);
+            })            
     }
+
+    
+    
+    console.log("Генерация карточек из масива", allThings);
+    generateCards(allThings);
 }
 
-// Вызов функции для получения топ-100 моделей
-fetchPopularThings(100);
+
+WriteModel();
 
 
 
