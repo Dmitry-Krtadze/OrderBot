@@ -144,7 +144,7 @@ submitOrder.addEventListener('click', () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: '1061513902',
+                chat_id: '-4794328318',
                 text: message + `\nПосилання на модель: https://www.thingiverse.com/thing:${submitOrder.dataset.id}`
             })
         })
