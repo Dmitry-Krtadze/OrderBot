@@ -10,16 +10,15 @@ document.querySelectorAll('input[name="fileOption"]').forEach(function(elem) {
     });
 });
 
-function sendOrder() {
+async function sendOrder() {
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('telegram').value;
     const color = document.getElementById('color').value;
     const fileOption = document.querySelector('input[name="fileOption"]:checked').value;
 
     let fileData;
-    let formData = new FormData(); // FormData для отправки файла
+    let formData = new FormData();
 
-    // Проверка на наличие файла или ссылки на Thingiverse
     if (fileOption === 'upload') {
         fileData = document.getElementById('fileUpload').files[0];
         if (!fileData) {
@@ -35,56 +34,60 @@ function sendOrder() {
         }
     }
 
-    // Сообщение для бота
     const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${telegram}\nКолір: ${color}`;
-    
-    // Если отправляется ссылка
-    if (fileOption === 'url') {
-        fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage`, {
+
+    try {
+        if (fileOption === 'url') {
+            await fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: '-4794328318',
+                    text: message + `\nПосилання на модель: ${fileData}`
+                })
+            });
+        } else {
+            formData.append('chat_id', '1061513902');
+            formData.append('caption', message);
+
+            await fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendDocument`, {
+                method: 'POST',
+                body: formData
+            });
+        }
+
+        // Отправка заказа в CRM
+        const API_URL = 'https://aromatic-grizzled-dirt.glitch.me'; // Замените на ваш URL CRM
+        const crmResponse = await fetch(`${API_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: '-4794328318',
-                text: message + `\nПосилання на модель: ${fileData}`
+                name,
+                telegram,
+                color,
+                comment: fileOption === 'url' ? fileData : 'Файл завантажено',
+                modelId: fileOption === 'url' ? fileData : 'Файл у телегам'
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                alert('Замовлення успішно надіслано!');
-            } else {
-                alert('Помилка при надсиланні замовлення. Спробуйте ще раз.');
-            }
-        })
-        .catch(error => {
-            console.error('Помилка:', error);
-            alert('Виникла помилка при надсиланні замовлення.');
         });
-    } else {
-        // Если отправляется файл
-        formData.append('chat_id', '1061513902');
-        formData.append('caption', message);
 
-        fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendDocument`, {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                alert('Замовлення успішно надіслано!');
-            } else {
-                alert('Помилка при надсиланні замовлення. Спробуйте ще раз.');
-            }
-        })
-        .catch(error => {
-            console.error('Помилка:', error);
-            alert('Виникла помилка при надсиланні замовлення.');
-        });
+        if (!crmResponse.ok) {
+            const errorMessage = await crmResponse.text();
+            throw new Error(`Ошибка CRM: ${crmResponse.status} - ${errorMessage}`);
+        }
+
+        const crmData = await crmResponse.json();
+        console.log('Заказ успешно отправлен в CRM:', crmData);
+        alert('Ваше замовлення прийнято!');
+    } catch (error) {
+        console.error('Помилка:', error);
+        alert('Виникла помилка при надсиланні замовлення. Спробуйте ще раз.');
     }
 }
+
 let menu_button = document.querySelector('.header__burger');
 let menu_itself = document.querySelector('.header__menu');
 let menu_list = document.querySelector('.header__list');
@@ -101,4 +104,3 @@ menu_list.onclick = function() {
   menu_itself.classList.toggle('active');
   body.classList.toggle('lock');
 };
-
