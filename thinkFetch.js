@@ -1,5 +1,9 @@
 const accessToken = "4aec01d2cbf747275da7922d16ae5741";
+const API_URL = 'https://aromatic-grizzled-dirt.glitch.me/'; // URL вашего сервера
+const TELEGRAM_API_URL = 'https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage';
+const CHAT_ID = '-4794328318';
 
+// Функция для получения популярных моделей
 async function fetchPopularThings(limit = 500) {
     let page = 1; // Начальная страница
     const perPage = 50; // Количество моделей на страницу
@@ -38,8 +42,6 @@ async function fetchPopularThings(limit = 500) {
         console.log("Загруженные популярные модели:", allThings);
         generateCards(allThings);
         return allThings.slice(0, limit); // Ограничиваем количество моделей
-
-        
     } catch (error) {
         console.error("Ошибка при запросе популярных моделей:", error);
         return [];
@@ -49,19 +51,8 @@ async function fetchPopularThings(limit = 500) {
 // Вызов функции для получения топ-100 моделей
 fetchPopularThings(100);
 
-
-
-
-
-
-
-
-
-
-
-
-function  generateCards(data){
-    // Генерация карточек
+// Генерация карточек
+function generateCards(data) {
     const cardsContainer = document.getElementById('cards-container');
     data.forEach(thing => {
         const card = document.createElement('div');
@@ -73,10 +64,7 @@ function  generateCards(data){
         `;
         cardsContainer.appendChild(card);
     });
-
-    
 }
-
 
 // Управление модальным окном
 const modal = document.getElementById('modal');
@@ -91,48 +79,69 @@ modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.style.display = 'none';
 });
 
-submitOrder.addEventListener('click', () => {
+submitOrder.addEventListener('click', async () => {
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('phone').value;
-    const Comment = document.getElementById('Comment').value;
+    const comment = document.getElementById('Comment').value;
     const color = document.getElementById('color').value;
+    const modelId = submitOrder.dataset.id;
 
-    if (!name || !phone) {
+    if (!name || !telegram) {
         alert('Будь ласка, заповніть всі поля.');
         return;
     }
 
-    // Здесь отправка данных на сервер или API
-    console.log(`Замовлено модель ID: ${submitOrder.dataset.id}`);
-    console.log(`Ім'я: ${name}, Телефон: ${phone}`);
-
-    alert('Ваше замовлення прийнято!');
-    modal.style.display = 'none';
-
-
-    // Сообщение для бота
-    const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${telegram}\nКолір: ${color}\nКоментар: ${Comment}`;
-    fetch(`https://api.telegram.org/bot7332798600:AAGnnjy_jVsk71rSMIon3ynM8ZuYmGf6YkE/sendMessage`, {
+    try {
+        // Отправка заказа в CRM
+        const crmResponse = await fetch(`${API_URL}/orders`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: '-4794328318',
-                text: message + `\nПосилання на модель: https://www.thingiverse.com/thing:${submitOrder.dataset.id}`
+                name,
+                telegram,
+                comment,
+                color,
+                modelId
             })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                alert('Замовлення успішно надіслано!');
-            } else {
-                alert('Помилка при надсиланні замовлення. Спробуйте ще раз.');
-            }
-        })
-        .catch(error => {
-            console.error('Помилка:', error);
-            alert('Виникла помилка при надсиланні замовлення.');
         });
 
+        if (!crmResponse.ok) {
+            const errorMessage = await crmResponse.text(); // Получаем текст ошибки от сервера
+            throw new Error(`Ошибка CRM: ${crmResponse.status} - ${errorMessage}`);
+        }
+
+        const crmData = await crmResponse.json();
+        console.log('Заказ успешно отправлен в CRM:', crmData);
+        alert('Ваше замовлення прийнято!');
+
+        // Отправка сообщения в Telegram
+        const message = `Нове замовлення на 3D-друк:\nІм'я: ${name}\nКонтакт: ${telegram}\nКолір: ${color}\nКоментар: ${comment}\nПосилання на модель: https://www.thingiverse.com/thing:${modelId}`;
+        const telegramResponse = await fetch(TELEGRAM_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message
+            })
+        });
+
+        if (!telegramResponse.ok) {
+            const errorMessage = await telegramResponse.text(); // Получаем текст ошибки от Telegram
+            throw new Error(`Ошибка Telegram: ${telegramResponse.status} - ${errorMessage}`);
+        }
+
+        const telegramData = await telegramResponse.json();
+        console.log('Сообщение успешно отправлено в Telegram:', telegramData);
+       
+    } catch (error) {
+        console.error('Ошибка при отправке заказа в CRM или Telegram:', error);
+       
+    }
+
+    modal.style.display = 'none'; // Закрываем модальное окно
 });
+
