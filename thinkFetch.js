@@ -80,6 +80,7 @@ modal.addEventListener('click', (e) => {
 });
 
 submitOrder.addEventListener('click', async () => {
+    alert('Запит обробляється, зачекайте, будь ласка.');
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('phone').value;
     const comment = document.getElementById('Comment').value;

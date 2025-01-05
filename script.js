@@ -11,6 +11,7 @@ document.querySelectorAll('input[name="fileOption"]').forEach(function(elem) {
 });
 
 async function sendOrder() {
+    alert('Запит обробляється, зачекайте, будь ласка.');
     const name = document.getElementById('name').value;
     const telegram = document.getElementById('telegram').value;
     const color = document.getElementById('color').value;
